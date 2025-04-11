@@ -28,12 +28,14 @@ csi:
             "primary": {
               "primaryFs": "mySpectrumScaleFs"
             },
-            "restApi": {
-              "guiHost": "1.2.3.4",
-              "guiPort": 443,
-              "user": "admin",
-              "password": "changeme"
-            }
+            "restApi": [
+              {
+                "guiHost": "1.2.3.4",
+                "guiPort": 443,
+                "user": "admin",
+                "password": "changeme"
+              }
+            ]
           }
         ]
       }
