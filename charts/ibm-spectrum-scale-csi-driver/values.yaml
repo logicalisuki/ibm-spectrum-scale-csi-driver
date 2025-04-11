@@ -20,7 +20,7 @@ csi:
   primaryFs: "replace-with-your-primary-filesystem"
   config:
     # The actual Spectrum Scale config JSON
-    spectrum-scale-config.json: |
+    spectrumScaleConfig: |
       {
         "clusters": [
           {
