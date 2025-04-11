@@ -29,7 +29,7 @@ csi:
               {
                 "guiHost": "1.2.3.4",
                 "guiPort": 443,
-                "guiUser": "admin",
+                "UserName": "admin",
                 "guiPasswd": "changeme"
               }
             ],
