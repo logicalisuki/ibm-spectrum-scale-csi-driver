@@ -1,0 +1,58 @@
+# IBM GPFS (Spectrum Scale) CSI driver container images
+image:
+  repository: "quay.io/ibm-spectrum-scale/ibm-spectrum-scale-csi-driver"
+  tag: "v2.10.7"
+  pullPolicy: IfNotPresent
+
+# Global pull secrets (if you need a secret to pull from an IBM registry)
+imagePullSecrets: []
+# Example:
+# imagePullSecrets:
+#   - name: ibm-entitlement-key
+
+# The name of the service account that the CSI driver pods will use
+serviceAccountName: "ibm-spectrum-scale-csi-sa"
+
+# (Optional) You can override the default clusterID or spectrum scale config
+# or pass in environment variables for your environment:
+csi:
+  clusterId: "replace-with-your-cluster-id"
+  primaryFs: "replace-with-your-primary-filesystem"
+  # Add any other environment variables or configuration needed for the driver
+
+# Driver node DaemonSet settings
+node:
+  # Number of maximumUnavailable pods when upgrading
+  maxUnavailable: 1
+  # Resource requests/limits for the node plugin
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+# Driver controller Deployment settings
+controller:
+  replicas: 1
+  # Resource requests/limits for the controller plugin
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+# StorageClass parameters
+storageClass:
+  # Name of the StorageClass to create
+  name: "spectrum-scale-sc"
+  # Reclaim policy: Retain / Delete
+  reclaimPolicy: "Delete"
+  parameters:
+    
+    clusterId: "{{ .Values.csi.clusterId }}"
+    fsName: "{{ .Values.csi.primaryFs }}"
+

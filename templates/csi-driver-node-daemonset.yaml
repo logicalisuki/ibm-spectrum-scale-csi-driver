@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "ibm-spectrum-scale-csi-driver.fullname" . }}-node
+  labels:
+    app.kubernetes.io/name: {{ include "ibm-spectrum-scale-csi-driver.fullname" . }}
+    app.kubernetes.io/component: node
+spec:
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: {{ .Values.node.maxUnavailable }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "ibm-spectrum-scale-csi-driver.fullname" . }}
+      app.kubernetes.io/component: node
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "ibm-spectrum-scale-csi-driver.fullname" . }}
+        app.kubernetes.io/component: node
+    spec:
+      serviceAccountName: {{ .Values.serviceAccountName }}
+      tolerations:
+        - operator: "Exists"
+      containers:
+        - name: csi-node
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - "--v=5"
+            - "--endpoint=$(CSI_ENDPOINT)"
+            - "--drivername=spectrumscale.csi.ibm.com"
+            - "--nodeid=$(KUBE_NODE_NAME)"
+          env:
+            - name: CSI_ENDPOINT
+              value: "unix:///csi/csi.sock"
+            - name: KUBE_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: CLUSTER_ID
+              value: "{{ .Values.csi.clusterId }}"
+            - name: PRIMARYFS
+              value: "{{ .Values.csi.primaryFs }}"
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi
+          resources:
+            {{- toYaml .Values.node.resources | nindent 12 }}
+      volumes:
+        - name: plugin-dir
+          hostPath:
+            path: /var/lib/kubelet/plugins/spectrumscale.csi.ibm.com
+            type: DirectoryOrCreate
+
