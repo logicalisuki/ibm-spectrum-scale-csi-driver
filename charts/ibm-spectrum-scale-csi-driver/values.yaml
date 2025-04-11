@@ -18,7 +18,25 @@ serviceAccountName: "ibm-spectrum-scale-csi-sa"
 csi:
   clusterId: "replace-with-your-cluster-id"
   primaryFs: "replace-with-your-primary-filesystem"
-  # Add any other environment variables or configuration needed for the driver
+  config:
+    # The actual Spectrum Scale config JSON
+    spectrumScaleConfig: |
+      {
+        "clusters": [
+          {
+            "id": "abcd1234",
+            "primary": {
+              "primaryFs": "mySpectrumScaleFs"
+            },
+            "restApi": {
+              "guiHost": "1.2.3.4",
+              "guiPort": 443,
+              "user": "admin",
+              "password": "changeme"
+            }
+          }
+        ]
+      }
 
 # Driver node DaemonSet settings
 node:

@@ -45,6 +45,8 @@ spec:
           volumeMounts:
             - name: plugin-dir
               mountPath: /csi
+            - name: scale-config
+              mountPath: /var/lib/ibm/config
           resources:
             {{- toYaml .Values.node.resources | nindent 12 }}
       volumes:
@@ -52,4 +54,10 @@ spec:
           hostPath:
             path: /var/lib/kubelet/plugins/spectrumscale.csi.ibm.com
             type: DirectoryOrCreate
+        - name: scale-config
+          configMap:
+            name: {{ include "ibm-spectrum-scale-csi-driver.fullname" . }}-spectrum-scale-config
+            items:
+              - key: spectrum-scale-config.json
+                path: spectrum-scale-config.json
 

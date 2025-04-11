@@ -38,4 +38,13 @@ spec:
             - containerPort: 8080
           resources:
             {{- toYaml .Values.controller.resources | nindent 12 }}
-
+          volumeMounts:
+            - name: scale-config
+              mountPath: /var/lib/ibm/config
+      volumes:
+        - name: scale-config
+          configMap:
+            name: {{ include "ibm-spectrum-scale-csi-driver.fullname" . }}-spectrum-scale-config
+            items:
+              - key: spectrum-scale-config.json
+                path: spectrum-scale-config.json
