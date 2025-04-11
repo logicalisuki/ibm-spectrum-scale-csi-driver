@@ -25,13 +25,6 @@ csi:
         "clusters": [
           {
             "id": "myClusterID",
-            "secrets": [
-              {
-                "secretKey": "mySecretKey", 
-                "username": "mySecretUser", 
-                "password": "mySecretPassword"
-              }
-            ],
             "restApi": [
               {
                 "guiHost": "1.2.3.4",
