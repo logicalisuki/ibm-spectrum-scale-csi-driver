@@ -4,4 +4,3 @@ description: Helm chart for IBM GPFS (Spectrum Scale) CSI driver
 type: application
 version: 1.1.9
 appVersion: "2.10.7"
-

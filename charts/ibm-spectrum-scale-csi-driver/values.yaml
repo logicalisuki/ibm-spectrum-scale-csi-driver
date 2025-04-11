@@ -20,22 +20,30 @@ csi:
   primaryFs: "replace-with-your-primary-filesystem"
   config:
     # The actual Spectrum Scale config JSON
-    spectrumScaleConfig: |
+    spectrum-scale-config.json: |
       {
         "clusters": [
           {
-            "id": "abcd1234",
-            "primary": {
-              "primaryFs": "mySpectrumScaleFs"
-            },
+            "id": "myClusterID",
+            "secrets": [
+              {
+                "secretKey": "mySecretKey", 
+                "username": "mySecretUser", 
+                "password": "mySecretPassword"
+              }
+            ],
             "restApi": [
               {
                 "guiHost": "1.2.3.4",
                 "guiPort": 443,
-                "username": "admin",
-                "password": "changeme"
+                "guiUser": "admin",
+                "guiPasswd": "changeme"
               }
-            ]
+            ],
+            "primary": {
+              "primaryFs": "mySpectrumScaleFs",
+              "primaryFset": ""
+            }
           }
         ]
       }
