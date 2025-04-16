@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "ibm-spectrum-scale-csi-driver.fullname" . }}-controller
+  namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: {{ include "ibm-spectrum-scale-csi-driver.fullname" . }}
     app.kubernetes.io/component: controller
