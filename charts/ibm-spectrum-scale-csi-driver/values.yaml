@@ -18,25 +18,26 @@ serviceAccountName: "ibm-spectrum-scale-csi-sa"
 csi:
   clusterId: "replace-with-your-cluster-id"
   primaryFs: "replace-with-your-primary-filesystem"
+  username: "admin"
+  password: "changeme"
   config:
+    secretName: "spectrum-scale-secret"
     # The actual Spectrum Scale config JSON
     spectrumScaleConfig: |
       {
         "clusters": [
           {
-            "id": "myClusterID",
+            "id": "7323545008369427178",
+            "primary": {
+              "primaryFs": "gpfs0"
+            },
             "restApi": [
               {
-                "guiHost": "1.2.3.4",
-                "guiPort": 443,
-                "UserName": "admin",
-                "guiPasswd": "changeme"
+                "guiHost": "oc-w1.uni.ac.uk"
               }
             ],
-            "primary": {
-              "primaryFs": "mySpectrumScaleFs",
-              "primaryFset": ""
-            }
+            "secrets": "{{ .Values.csi.config.secretName }}",
+            "secureSslMode": false
           }
         ]
       }

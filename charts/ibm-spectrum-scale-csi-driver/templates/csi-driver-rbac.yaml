@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ .Values.serviceAccountName }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: {{ include "ibm-spectrum-scale-csi-driver.fullname" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
