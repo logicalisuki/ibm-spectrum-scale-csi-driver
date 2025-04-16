@@ -36,7 +36,7 @@ csi:
                 "guiHost": "oc-w1.uni.ac.uk"
               }
             ],
-            "secrets": "ibmguisecret",
+            "secrets": "{{ .Values.csi.config.secretName }}",
             "secureSslMode": false
           }
         ]
