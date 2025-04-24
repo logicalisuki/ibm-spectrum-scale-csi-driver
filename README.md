@@ -7,7 +7,7 @@
 ## How to deploy
 
 ```bash
-helm repo add albal https://albal.github.io/ibm-spectrum-scale-csi-driver
+helm repo add logicalisuki https://logicalisuki.github.io/ibm-spectrum-scale-csi-driver
 helm repo update
-helm install spectrum albal/ibm-spectrum-scale-csi-driver -n ibm --create-namespace
+helm install spectrum logicalisuki/ibm-spectrum-scale-csi-driver -n ibm --create-namespace
 ```
